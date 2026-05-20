@@ -1,0 +1,43 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      MONGO_URI: mongodb://mongo:27017/pokemon
+      PORT: 3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - backend
+
+  mongo:
+    image: mongo:8.3.2
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: pokemon
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - backend
+
+volumes:
+  mongo-data:
+
+networks:
+  backend:
