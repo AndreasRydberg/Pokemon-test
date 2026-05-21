@@ -2,7 +2,7 @@ import Team from "../interfaces/Team";
 import TeamPokemon from "../interfaces/TeamPokemon";
 
 export default class BattleService {
-    public async battle(team1: Team, team2: Team): Promise<{ winner: Team; battleLog: string[] }> {
+    public battle(team1: Team, team2: Team): { winner: Team; battleLog: string[] } {
         const battleLog = [];
 
         // Add an iteration counter to prevent infinite loops
