@@ -1,10 +1,12 @@
 import PokemonEntity from "../interfaces/PokemonEntity";
+import Team from "../interfaces/Team";
 
 export default class StatsCalculatorService {
     public calculateStats(pokemon: PokemonEntity): {
         hp: number;
         attack: number;
         defense: number;
+        speed: number;
      } {
         const weight = parseFloat(pokemon.weight);
         const height = parseFloat(pokemon.height);
@@ -25,6 +27,7 @@ export default class StatsCalculatorService {
             hp,
             attack,
             defense,
+            speed: pokemon.spawn_chance,
          };
     }
 }

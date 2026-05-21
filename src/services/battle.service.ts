@@ -10,33 +10,46 @@ export default class BattleService {
         const maxIterations = 1000;
 
         while (team1.pokemons.length > 0 && team2.pokemons.length > 0) {
+            ++iteration;
+
             const pokemon1 = team1.pokemons[0];
             const pokemon2 = team2.pokemons[0];
 
-            this.attack(pokemon1, pokemon2, battleLog);
+            let { firstAttacker, secondAttacker } = pokemon1.speed >= pokemon2.speed
+                ? { firstAttacker: pokemon1, secondAttacker: pokemon2 }
+                : { firstAttacker: pokemon2, secondAttacker: pokemon1 };
+            battleLog.push(`${firstAttacker.entity.name} (speed: ${firstAttacker.entity.avg_spawns}) attacks first against ${secondAttacker.entity.name} (speed: ${secondAttacker.entity.avg_spawns})`);
+
+            this.attack(firstAttacker, secondAttacker, battleLog);
 
             // Check if pokemon2 is defeated
-            if (pokemon2.hp <= 0) {
+            if (secondAttacker.hp <= 0) {
                 team2.pokemons.shift();
-                battleLog.push(`${pokemon1.entity.name} defeated ${pokemon2.entity.name}`);
+                battleLog.push(`${firstAttacker.entity.name} defeated ${secondAttacker.entity.name}`);
 
-                if (++iteration >= maxIterations) {
+                // Check if team2 has no more pokemons left before allowing pokemon2 to attack back.
+                if (team2.pokemons.length === 0) {
+                    break;
+                }
+
+                if (iteration >= maxIterations) {
                     battleLog.push("Battle ended due to reaching maximum iterations. Possible infinite loop detected.");
                     break;
                 }
 
-                continue;
+                // Update pokemon2 reference to the next pokemon in team2 after the previous one was defeated.
+                secondAttacker = team2.pokemons[0];
             }
 
-            this.attack(pokemon2, pokemon1, battleLog);
+            this.attack(secondAttacker, firstAttacker, battleLog);
 
-            // Check if pokemon1 is defeated
-            if (pokemon1.hp <= 0) {
+            // Check if firstAttacker is defeated
+            if (firstAttacker.hp <= 0) {
                 team1.pokemons.shift();
-                battleLog.push(`${pokemon2.entity.name} defeated ${pokemon1.entity.name}`);
+                battleLog.push(`${secondAttacker.entity.name} defeated ${firstAttacker.entity.name}`);
             }
 
-            if (++iteration >= maxIterations) {
+            if (iteration >= maxIterations) {
                 battleLog.push("Battle ended due to reaching maximum iterations. Possible infinite loop detected.");
                 break;
             }

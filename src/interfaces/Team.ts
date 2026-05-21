@@ -1,6 +1,6 @@
 import TeamPokemon from "./TeamPokemon";
 
 export default interface Team {
-    name: string
+    name: string;
     pokemons: TeamPokemon[];
 }
