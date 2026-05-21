@@ -1,11 +1,9 @@
 import express, { Application } from "express";
-import Server from "./src/index";
 import Routes from "./src/routes";
 
-const app: Application = express();
-const server: Server = new Server(app);
-new Routes(app);
 const PORT: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const app: Application = express();
+new Routes(app);
 
 app
   .listen(PORT, "0.0.0.0", function () {
