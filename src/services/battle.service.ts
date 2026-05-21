@@ -8,6 +8,7 @@ export default class BattleService {
     public async battle(team1: Team, team2: Team): Promise<Team> {
         const battleLog = [];
 
+        // Possible improvement: Add a counter to limit the number of rounds and prevent infinite battles in edge cases.
         while (team1.pokemons.length > 0 && team2.pokemons.length > 0) {
             const pokemon1 = team1.pokemons[0];
             const pokemon2 = team2.pokemons[0];
@@ -41,12 +42,29 @@ export default class BattleService {
     }
 
     private attack(attacker: Team["pokemons"][0], defender: Team["pokemons"][0], battleLog: string[]): number {
-        const damage = Math.max(0, attacker.attack - defender.defense);
+        let attackPower = attacker.attack;
+
+        if (this.hasDefenderWeakness(attacker, defender)) {
+            attackPower = Math.round(attackPower * 1.5); // Apply a 50% bonus for type advantage
+            battleLog.push(`${attacker.entity.name} has a type advantage against ${defender.entity.name}! Attack power increased to ${attackPower}`);
+        }
+
+        const damage = Math.max(0, attackPower - defender.defense);
         defender.hp -= damage;
 
         battleLog.push(`${attacker.entity.name} attacks ${defender.entity.name} for ${damage} damage`);
 
         return damage;
     }
-}
 
+    private hasDefenderWeakness(attacker: Team["pokemons"][0], defender: Team["pokemons"][0]): boolean {
+        for (const type of attacker.entity.type) {
+            if (defender.entity.weaknesses.includes(type)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+}
