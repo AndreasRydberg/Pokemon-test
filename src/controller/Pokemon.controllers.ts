@@ -3,25 +3,29 @@ import { getPokemenCollection } from "../DB";
 import PokemonEntity from "../interfaces/PokemonEntity";
 import Team from "../interfaces/Team";
 import BattleService from "../services/battle.service";
+import StatsCalculatorService from "../services/stats-calculator.service";
 
 
 export async function battle(req: Request, res: Response): Promise<Response> {
     const pokemons = await getPokemenCollection();
 
+    // TODO: improve checking and error handling for missing or invalid pokemon data.
     const pokemon1 = await pokemons.findOne({ id: 1 }) as unknown as PokemonEntity;
-
     const pokemon2 = await pokemons.findOne({ id: 4 }) as unknown as PokemonEntity;
 
-    // Todo: implement HP, attack, and defense calculations based on pokemon stats and types.
+    // TODO: Refactor stats calculation into BattleService?
+
+    const statsCalculator = new StatsCalculatorService();
+
+    const pokemonStats1 = statsCalculator.calculateStats(pokemon1);
+    const pokemonStats2 = statsCalculator.calculateStats(pokemon2);
 
     const team1: Team = {
         name: "Team 1",
         pokemons: [
             {
                 entity: pokemon1,
-                hp: 100,
-                attack: 10,
-                defense: 5,
+                ...pokemonStats1,
             },
         ]
     }
@@ -31,9 +35,7 @@ export async function battle(req: Request, res: Response): Promise<Response> {
         pokemons: [
             {
                 entity: pokemon2,
-                hp: 100,
-                attack: 12,
-                defense: 4,
+                ...pokemonStats2,
             },
         ]
     }

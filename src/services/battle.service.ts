@@ -12,10 +12,8 @@ export default class BattleService {
             const pokemon1 = team1.pokemons[0];
             const pokemon2 = team2.pokemons[0];
 
-            // Calculate damage from pokemon1 to pokemon2
-            const damageToPokemon2 = Math.max(0, pokemon1.attack - pokemon2.defense);
-            pokemon2.hp -= damageToPokemon2;
-            battleLog.push(`${pokemon1.entity.name} attacks ${pokemon2.entity.name} for ${damageToPokemon2} damage`);
+            this.attack(pokemon1, pokemon2, battleLog);
+
 
             // Check if pokemon2 is defeated
             if (pokemon2.hp <= 0) {
@@ -24,10 +22,7 @@ export default class BattleService {
                 continue;
             }
 
-            // Calculate damage from pokemon2 to pokemon1
-            const damageToPokemon1 = Math.max(0, pokemon2.attack - pokemon1.defense);
-            pokemon1.hp -= damageToPokemon1;
-            battleLog.push(`${pokemon2.entity.name} attacks ${pokemon1.entity.name} for ${damageToPokemon1} damage`);
+            this.attack(pokemon2, pokemon1, battleLog);
 
             // Check if pokemon1 is defeated
             if (pokemon1.hp <= 0) {
@@ -43,6 +38,15 @@ export default class BattleService {
         console.log(battleLog.join("\n"));
 
         return winner;
+    }
+
+    private attack(attacker: Team["pokemons"][0], defender: Team["pokemons"][0], battleLog: string[]): number {
+        const damage = Math.max(0, attacker.attack - defender.defense);
+        defender.hp -= damage;
+
+        battleLog.push(`${attacker.entity.name} attacks ${defender.entity.name} for ${damage} damage`);
+
+        return damage;
     }
 }
 
