@@ -15,11 +15,16 @@ export default class BattleService {
 
             this.attack(pokemon1, pokemon2, battleLog);
 
-
             // Check if pokemon2 is defeated
             if (pokemon2.hp <= 0) {
                 team2.pokemons.shift();
                 battleLog.push(`${pokemon1.entity.name} defeated ${pokemon2.entity.name}`);
+
+                if (++iteration >= maxIterations) {
+                    battleLog.push("Battle ended due to reaching maximum iterations. Possible infinite loop detected.");
+                    break;
+                }
+
                 continue;
             }
 
