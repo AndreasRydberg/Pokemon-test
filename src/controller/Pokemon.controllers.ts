@@ -9,9 +9,17 @@ import StatsCalculatorService from "../services/stats-calculator.service";
 export async function battle(req: Request, res: Response): Promise<Response> {
     const pokemons = await getPokemenCollection();
 
-    // TODO: improve checking and error handling for missing or invalid pokemon data.
-    const pokemon1 = await pokemons.findOne({ id: 1 }) as unknown as PokemonEntity;
-    const pokemon2 = await pokemons.findOne({ id: 4 }) as unknown as PokemonEntity;
+    const PokemonId1 = 1;
+    const pokemon1 = await pokemons.findOne({ id: PokemonId1 }) as unknown as PokemonEntity | null;
+    if (!pokemon1) {
+        throw new Error(`Pokemon not found: id ${PokemonId1}`);
+    }
+
+    const PokemonId2 = 4;
+    const pokemon2 = await pokemons.findOne({ id: PokemonId2 }) as unknown as PokemonEntity | null;
+    if (!pokemon2) {
+        throw new Error(`Pokemon not found: id ${PokemonId2}`);
+    }
 
     // TODO: Refactor stats calculation into BattleService?
 
