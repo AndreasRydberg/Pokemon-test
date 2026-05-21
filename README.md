@@ -18,7 +18,7 @@ Author: Andreas Rydberg
 
 ### Run Battle
 
-Go to http://localhost:3000/api/battle?team1=<ids>&team2=<ids> in your browser. `<ids>` is a comma seperated list of numeric pokemon IDS.
+Go to `http://localhost:3000/api/battle?team1=<ids>&team2=<ids>` in your browser. `<ids>` is a comma seperated list of numeric pokemon IDS.
 
 It should return JSON like `{"winner":"Team 1","battleLog":[...]}`.
 
