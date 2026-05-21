@@ -61,7 +61,7 @@ export default class BattleService {
         return { winner, battleLog };
     }
 
-    private attack(attacker: TeamPokemon, defender: TeamPokemon, battleLog: string[]): number {
+    private attack(attacker: TeamPokemon, defender: TeamPokemon, battleLog: string[]): void {
         let attackPower = attacker.attack;
 
         if (this.hasDefenderWeakness(attacker, defender)) {
@@ -73,8 +73,6 @@ export default class BattleService {
         defender.hp -= damage;
 
         battleLog.push(`${attacker.entity.name} attacks ${defender.entity.name} for ${damage} damage`);
-
-        return damage;
     }
 
     private hasDefenderWeakness(attacker: TeamPokemon, defender: TeamPokemon): boolean {
