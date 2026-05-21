@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "dev": "node ./dist/server.js",
-    "start": "tsc && npm run dev"
+    "start": "rm -rf dist && tsc && npm run dev",
+    "watch": "rm -rf dist && ts-node-dev --respawn --transpile-only server.ts"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
