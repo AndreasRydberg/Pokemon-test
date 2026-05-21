@@ -1,22 +1,22 @@
-= Pokemon Battle Simulator
+# Pokemon Battle Simulator
 
 Author: Andreas Rydberg
 
-== Run the application
+## Run the application
 
-=== Requiremnts
+### Requiremnts
 
 - OS: Linux (probably Debian, or at lease being able to execute Bash)
 - Bash: to run the scripts in ./bin/
 - Docker compose
 - Port 3000 to be unused.
 
-=== Commands
+### Commands
 
 - `bin/up` - Setup, install, seed pokemon dataset, and run dev mode with hot-reloading
 - `bin/watch-log` - Monitor logs
 
-=== Run Battle
+### Run Battle
 
 Go to http://localhost:3000/api/battle?team1=<ids>&team2=<ids> in your browser. `<ids>` is a comma seperated list of numeric pokemon IDS.
 
@@ -24,13 +24,13 @@ It should return JSON like `{"winner":"Team 1","battleLog":[...]}`.
 
 Example: `http://localhost:3000/api/battle?team1=1,23&team2=4,15`
 
-== Things to improve, if I hade more time.
+## Things to improve, if I hade more time.
 
 - Add some kind of Dependency Injection.
 - Set up ESlint and similar tools.
 - Use TDD.
 - Add more types, like `PokemonType`.
-- Use Mongoose for improved typing.
+- Use Mongoose for improved typing, instead of plain mongodb.
 - Add better logging.
 - Better security
 - Fix TODOs that are in the code. Things that I identified need for improvement but postponed.
