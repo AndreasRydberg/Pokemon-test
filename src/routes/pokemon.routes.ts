@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { welcome, list } from "../controller/Pokemon.controllers";
+import { battle, list } from "../controller/pokemon.controllers";
+import BattleService from "../services/battle.service";
 
 class PokemonRoutes {
 
@@ -10,8 +11,8 @@ class PokemonRoutes {
     }
 
     intializeRoutes() {
-        this.router.get("/", welcome);
         this.router.get("/index", list);
+        this.router.get("/battle", battle);
     }
 }
 
