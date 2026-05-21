@@ -1,19 +1,12 @@
-import mongoose from "mongoose";
+import { MongoClient, Db, Collection } from "mongodb";
 import PokemonEntity from "./interfaces/PokemonEntity";
 
 const MONGO_URI = process.env.MONGO_URI ?? 'mongodb://localhost:27017/pokemon';
 
-let connectionPromise: Promise<mongoose.mongo.Db> | null = null;
+const connectionPromise: Promise<Db> = new MongoClient(MONGO_URI).connect().then(client => client.db());
 
-async function mongoConnect(): Promise<mongoose.mongo.Db> {
-    if (!connectionPromise) {
-        connectionPromise = mongoose.connect(MONGO_URI).then(() => mongoose.connection.db!);
-    }
-    return connectionPromise;
-}
-
-export async function getPokemonCollection(): Promise<mongoose.mongo.Collection> {
-    const db = await mongoConnect();
+export async function getPokemonCollection(): Promise<Collection> {
+    const db = await connectionPromise;
 
     return db.collection('pokemon');
 }
@@ -25,4 +18,10 @@ export async function loadPokemon(id: number): Promise<PokemonEntity> {
         throw new Error(`Pokemon not found: id ${id}`);
     }
     return pokemon;
+}
+
+export async function closeConnection(): Promise<void> {
+    const client = await connectionPromise;
+
+    await client.client.close();
 }

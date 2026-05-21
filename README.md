@@ -29,8 +29,8 @@ Example: `http://localhost:3000/api/battle?team1=1,23&team2=4,15`
 - Add some kind of Dependency Injection.
 - Set up ESlint and similar tools.
 - Use TDD.
-- Clean up and extract sub types and sub interfaces.
 - Add more types, like `PokemonType`.
+- Use Mongoose for improved typing.
 - Add better logging.
 - Better security
 - Fix TODOs that are in the code. Things that I identified need for improvement but postponed.

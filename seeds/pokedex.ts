@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
 import fs from 'fs';
 import path from 'path';
-import { getPokemonCollection } from '../src/DB';
+import { closeConnection, getPokemonCollection } from '../src/DB';
 
 async function seed(): Promise<void> {
     const collection = await getPokemonCollection();
@@ -20,4 +19,4 @@ async function seed(): Promise<void> {
 // Using promises instead of top-level await, since it is still experimental.
 seed()
     .catch(console.error)
-    .finally(() => mongoose.disconnect());
+    .finally(async () => await closeConnection());
