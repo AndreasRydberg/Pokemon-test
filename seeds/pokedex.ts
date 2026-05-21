@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 import fs from 'fs';
 import path from 'path';
-import { getPokemenCollection } from '../src/DB';
+import { getPokemonCollection } from '../src/DB';
 
 async function seed(): Promise<void> {
-    const collection = await getPokemenCollection();
+    const collection = await getPokemonCollection();
 
     // Truncate the collection before seeding, to avoid duplicates.
     await collection.deleteMany({});

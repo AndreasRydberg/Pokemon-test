@@ -12,14 +12,14 @@ async function mongoConnect(): Promise<mongoose.mongo.Db> {
     return connectionPromise;
 }
 
-export async function getPokemenCollection(): Promise<mongoose.mongo.Collection> {
+export async function getPokemonCollection(): Promise<mongoose.mongo.Collection> {
     const db = await mongoConnect();
 
     return db.collection('pokemon');
 }
 
 export async function loadPokemon(id: number): Promise<PokemonEntity> {
-    const pokemons = await getPokemenCollection();
+    const pokemons = await getPokemonCollection();
     const pokemon = await pokemons.findOne({ id }) as unknown as PokemonEntity | null;
     if (!pokemon) {
         throw new Error(`Pokemon not found: id ${id}`);

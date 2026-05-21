@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getPokemenCollection, loadPokemon } from "../DB";
+import { getPokemonCollection, loadPokemon } from "../DB";
 import Team from "../interfaces/Team";
 import BattleService from "../services/battle.service";
 import StatsCalculatorService from "../services/stats-calculator.service";
@@ -46,7 +46,7 @@ export async function battle(req: Request, res: Response): Promise<Response> {
 }
 
 export async function list(req: Request, res: Response): Promise<Response> {
-    const pokemons = await getPokemenCollection();
+    const pokemons = await getPokemonCollection();
 
     return res.json({
         pokemon: await pokemons.find().toArray(),
