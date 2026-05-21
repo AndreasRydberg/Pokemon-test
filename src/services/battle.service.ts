@@ -1,4 +1,5 @@
 import Team from "../interfaces/Team";
+import TeamPokemon from "../interfaces/TeamPokemon";
 
 export default class BattleService {
     constructor() {
@@ -41,7 +42,7 @@ export default class BattleService {
         return winner;
     }
 
-    private attack(attacker: Team["pokemons"][0], defender: Team["pokemons"][0], battleLog: string[]): number {
+    private attack(attacker: TeamPokemon, defender: TeamPokemon, battleLog: string[]): number {
         let attackPower = attacker.attack;
 
         if (this.hasDefenderWeakness(attacker, defender)) {
@@ -57,7 +58,7 @@ export default class BattleService {
         return damage;
     }
 
-    private hasDefenderWeakness(attacker: Team["pokemons"][0], defender: Team["pokemons"][0]): boolean {
+    private hasDefenderWeakness(attacker: TeamPokemon, defender: TeamPokemon): boolean {
         for (const type of attacker.entity.type) {
             if (defender.entity.weaknesses.includes(type)) {
                 return true;

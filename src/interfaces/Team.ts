@@ -1,11 +1,6 @@
-import PokemonEntity from "./PokemonEntity";
+import TeamPokemon from "./TeamPokemon";
 
 export default interface Team {
     name: string
-    pokemons: {
-        entity: PokemonEntity;
-        hp: number;
-        attack: number;
-        defense: number;
-    }[];
+    pokemons: TeamPokemon[];
 }
