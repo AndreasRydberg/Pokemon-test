@@ -18,9 +18,11 @@ Author: Andreas Rydberg
 
 === Run Battle
 
-1. Go to http://localhost:3000/api/battle?team1=<ids>&team2=<ids> in your browser. Where `<ids>` is comma seperated list of numeric pokemon IDS. It should return JSON like `{"winner":"Team 1","battleLog":[...]}`
-  Example: `http://localhost:3000/api/battle?team1=1,23&team2=4,15`
-2. Check battle log in the docker application logs with: `bin/watch-log`
+Go to http://localhost:3000/api/battle?team1=<ids>&team2=<ids> in your browser. `<ids>` is a comma seperated list of numeric pokemon IDS.
+
+It should return JSON like `{"winner":"Team 1","battleLog":[...]}`.
+
+Example: `http://localhost:3000/api/battle?team1=1,23&team2=4,15`
 
 == Things to improve, if I hade more time.
 
