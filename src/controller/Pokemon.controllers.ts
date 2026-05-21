@@ -1,19 +1,8 @@
 import { Request, Response } from "express";
-import { getPokemenCollection } from "../DB";
-import PokemonEntity from "../interfaces/PokemonEntity";
+import { getPokemenCollection, loadPokemon } from "../DB";
 import Team from "../interfaces/Team";
 import BattleService from "../services/battle.service";
 import StatsCalculatorService from "../services/stats-calculator.service";
-
-async function loadPokemon(id: number): Promise<PokemonEntity> {
-    const pokemons = await getPokemenCollection();
-    const pokemon = await pokemons.findOne({ id }) as unknown as PokemonEntity | null;
-    if (!pokemon) {
-        throw new Error(`Pokemon not found: id ${id}`);
-    }
-    return pokemon;
-}
-
 
 export async function battle(req: Request, res: Response): Promise<Response> {
     const pokemon1 = await loadPokemon(1);
