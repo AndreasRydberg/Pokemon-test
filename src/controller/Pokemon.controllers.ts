@@ -16,8 +16,6 @@ async function loadPokemon(id: number): Promise<PokemonEntity> {
 
 
 export async function battle(req: Request, res: Response): Promise<Response> {
-    const pokemons = await getPokemenCollection();
-
     const pokemon1 = await loadPokemon(1);
     const pokemon2 = await loadPokemon(23);
     const pokemon3 = await loadPokemon(4);
