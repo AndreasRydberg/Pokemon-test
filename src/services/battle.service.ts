@@ -1,3 +1,4 @@
+import { it } from "node:test";
 import Team from "../interfaces/Team";
 import TeamPokemon from "../interfaces/TeamPokemon";
 
@@ -9,7 +10,10 @@ export default class BattleService {
     public async battle(team1: Team, team2: Team): Promise<Team> {
         const battleLog = [];
 
-        // Possible improvement: Add a counter to limit the number of rounds and prevent infinite battles in edge cases.
+        // Add an iteration counter to prevent infinite loops
+        let iteration = 0;
+        const maxIterations = 1000;
+
         while (team1.pokemons.length > 0 && team2.pokemons.length > 0) {
             const pokemon1 = team1.pokemons[0];
             const pokemon2 = team2.pokemons[0];
@@ -30,6 +34,11 @@ export default class BattleService {
             if (pokemon1.hp <= 0) {
                 team1.pokemons.shift();
                 battleLog.push(`${pokemon2.entity.name} defeated ${pokemon1.entity.name}`);
+            }
+
+            if (++iteration >= maxIterations) {
+                battleLog.push("Battle ended due to reaching maximum iterations. Possible infinite loop detected.");
+                break;
             }
         }
 
