@@ -1,12 +1,7 @@
-import { it } from "node:test";
 import Team from "../interfaces/Team";
 import TeamPokemon from "../interfaces/TeamPokemon";
 
 export default class BattleService {
-    constructor() {
-        // Initialize any necessary properties or dependencies here
-    }
-
     public async battle(team1: Team, team2: Team): Promise<Team> {
         const battleLog = [];
 
