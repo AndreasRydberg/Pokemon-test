@@ -15,9 +15,9 @@ export default class BattleService {
             const pokemon1 = team1.pokemons[0];
             const pokemon2 = team2.pokemons[0];
 
-            let { firstAttacker, secondAttacker } = pokemon1.speed >= pokemon2.speed
-                ? { firstAttacker: pokemon1, secondAttacker: pokemon2 }
-                : { firstAttacker: pokemon2, secondAttacker: pokemon1 };
+            let [ firstAttacker, secondAttacker ] = pokemon1.speed >= pokemon2.speed
+                ? [ pokemon1, pokemon2 ]
+                : [ pokemon2, pokemon1 ];
             battleLog.push(`${firstAttacker.entity.name} (speed: ${firstAttacker.speed}) attacks first against ${secondAttacker.entity.name} (speed: ${secondAttacker.speed})`);
 
             this.attack(firstAttacker, secondAttacker, battleLog);

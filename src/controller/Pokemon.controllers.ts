@@ -58,5 +58,4 @@ function parseTeamIds(teamIds: string): number[] {
         .map(id => parseInt(id.trim(), 10))
         .filter(id => !isNaN(id))
         .filter(id => id > 0);
-
-    }
+}
