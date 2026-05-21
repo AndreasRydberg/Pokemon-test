@@ -2,6 +2,11 @@
 
 set -e
 
-docker compose up -d --remove-orphans --build
+docker compose build
+docker compose run --rm app npm install
+docker compose up -d --remove-orphans
 
+echo "Seeding database..."
 bin/seed
+
+echo "All done! The application is running at http://localhost:3000"

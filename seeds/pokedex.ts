@@ -3,8 +3,6 @@ import fs from 'fs';
 import path from 'path';
 import { getPokemenCollection } from '../src/DB';
 
-const MONGO_URI = process.env.MONGO_URI ?? 'mongodb://localhost:27017/pokemon';
-
 async function seed(): Promise<void> {
     const collection = await getPokemenCollection();
 

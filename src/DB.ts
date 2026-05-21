@@ -3,10 +3,13 @@ import PokemonEntity from "./interfaces/PokemonEntity";
 
 const MONGO_URI = process.env.MONGO_URI ?? 'mongodb://localhost:27017/pokemon';
 
-async function mongoConnect(): Promise<mongoose.mongo.Db> {
-    await mongoose.connect(MONGO_URI);
+let connectionPromise: Promise<mongoose.mongo.Db> | null = null;
 
-    return mongoose.connection.db!;
+async function mongoConnect(): Promise<mongoose.mongo.Db> {
+    if (!connectionPromise) {
+        connectionPromise = mongoose.connect(MONGO_URI).then(() => mongoose.connection.db!);
+    }
+    return connectionPromise;
 }
 
 export async function getPokemenCollection(): Promise<mongoose.mongo.Collection> {
