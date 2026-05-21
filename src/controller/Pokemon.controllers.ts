@@ -36,12 +36,12 @@ export async function battle(req: Request, res: Response): Promise<Response> {
         })),
     }
 
-
     const battleService = new BattleService();
-    const winner = await battleService.battle(team1, team2);
+    const { winner, battleLog } = await battleService.battle(team1, team2);
 
     return res.json({
         winner: winner.name,
+        battleLog: battleLog,
     });
 }
 

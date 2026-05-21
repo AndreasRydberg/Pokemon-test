@@ -2,7 +2,7 @@ import Team from "../interfaces/Team";
 import TeamPokemon from "../interfaces/TeamPokemon";
 
 export default class BattleService {
-    public async battle(team1: Team, team2: Team): Promise<Team> {
+    public async battle(team1: Team, team2: Team): Promise<{ winner: Team; battleLog: string[] }> {
         const battleLog = [];
 
         // Add an iteration counter to prevent infinite loops
@@ -45,10 +45,7 @@ export default class BattleService {
         const winner = team1.pokemons.length > 0 ? team1 : team2;
         battleLog.push(`${winner.name} wins the battle!`);
 
-        // TODO: write battleLog to a file or database for later analysis.
-        console.log(battleLog.join("\n"));
-
-        return winner;
+        return { winner, battleLog };
     }
 
     private attack(attacker: TeamPokemon, defender: TeamPokemon, battleLog: string[]): number {
