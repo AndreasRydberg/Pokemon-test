@@ -7,7 +7,6 @@ services:
     ports:
       - "3000:3000"
     environment:
-      NODE_ENV: development
       MONGO_URI: mongodb://mongo:27017/pokemon
       PORT: 3000
       CHOKIDAR_USEPOLLING: 1
